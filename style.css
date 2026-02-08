@@ -1,0 +1,150 @@
+/* --- THEME VARIABLES --- */
+:root {
+  --bg1: #060913; --bg2: #0b1220; --glassA: rgba(255, 255, 255, 0.09); --glassB: rgba(255, 255, 255, 0.04);
+  --stroke: rgba(255, 255, 255, 0.12); --accent: #6ee7ff; --accent2: #a78bfa; --glow: #74f1ff; --text: #eaf2ff;
+  --panel: #0f1b3d; --panel-2: #1a2650; --brand-grad: linear-gradient(90deg, #22d3ee, #a78bfa, #60a5fa);
+}
+
+/* Nebula theme (active) */
+html[data-theme="nebula"] {
+  --bg1: #0a0a18; --bg2: #11142a; --glassA: rgba(210, 190, 255, 0.16); --glassB: rgba(180, 170, 255, 0.07);
+  --stroke: rgba(200, 190, 255, 0.22); --accent: #b08cff; --accent2: #6fe4ff; --glow: #caa6ff; --text: #eef0ff;
+  --panel: #121a36; --panel-2: #15244a; --brand-grad: linear-gradient(90deg, #c4b5fd, #60a5fa, #a78bfa);
+}
+
+/* --- GLOBAL RESET & BASE --- */
+html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
+body {
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, var(--bg1), var(--bg2));
+}
+
+/* --- BACKGROUND FX --- */
+.cosmos-canvas {
+  position: fixed; inset: 0; z-index: -2; width: 100vw; height: 100vh;
+  background: radial-gradient(1150px 780px at 15% 15%, rgba(40, 60, 120, .18), transparent 65%),
+              radial-gradient(1050px 700px at 85% 20%, rgba(70, 30, 110, .16), transparent 65%);
+}
+
+.cursor-glass {
+  position: fixed; left: 0; top: 0; width: 380px; height: 380px; transform: translate(-50%, -50%);
+  pointer-events: none; border-radius: 9999px; z-index: -1;
+  background: radial-gradient(160px 160px at 50% 50%, rgba(202, 166, 255, 0.36), rgba(111, 228, 255, 0.22) 45%, transparent 70%);
+  filter: blur(40px) saturate(120%); mix-blend-mode: screen; opacity: 0; transition: opacity .25s ease;
+}
+
+.gridlines {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, .06) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, .06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 80%);
+  opacity: .10;
+}
+
+/* --- LAYOUT GRID --- */
+.app-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sticky-col { position: sticky; top: 2rem; height: fit-content; }
+.sidebar-card { padding: 2rem; text-align: center; }
+.avatar-container {
+  width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%;
+  position: relative; padding: 4px; background: var(--brand-grad);
+}
+.avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg1); background: #000; }
+
+.nav-menu { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 2rem; }
+
+/* --- BUTTONS & INPUTS --- */
+.cat-btn {
+  display: flex; align-items: center; gap: 1rem; padding: 1rem;
+  color: var(--text); text-decoration: none; font-weight: 600;
+  border: 1px solid transparent; border-radius: 14px; transition: all 0.2s;
+}
+.cat-btn:hover { background: rgba(255, 255, 255, 0.05); }
+.cat-btn.active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .08));
+  border-color: rgba(120, 200, 255, .9);
+  box-shadow: 0 0 24px rgba(120, 200, 255, .2);
+}
+
+.liquid-btn {
+  cursor: pointer; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.07));
+  color: #fff; position: relative; overflow: hidden; display: inline-block;
+  text-decoration: none; text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.liquid-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+.btn-sm { padding: 0.5rem 1rem; font-size: 0.9rem; }
+
+.input {
+  width: 100%; padding: 1rem; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--stroke);
+  color: white; font-family: inherit; box-sizing: border-box;
+}
+.input:focus { border-color: var(--accent); outline: none; }
+
+/* --- CARDS & CONTENT --- */
+.card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03));
+  border: 1px solid var(--stroke); border-radius: 22px; padding: 1.5rem;
+  transition: transform 0.25s ease; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; height: 100%;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+.glass { backdrop-filter: blur(12px); }
+
+/* --- TYPOGRAPHY --- */
+.grad-text { background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.section-title { font-family: 'Plus Jakarta Sans', Inter; font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.1rem); font-weight: 800; margin-bottom: 0.5rem; margin-top: 0; }
+.section-sub { color: #cfe8ffcc; margin-bottom: 2rem; display: block; }
+section { scroll-margin-top: 2rem; margin-bottom: 4rem; }
+
+/* --- SPECIFIC MODULES --- */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.grid-1 { display: grid; gap: 4rem; }
+
+.badge { background: var(--brand-grad); color: #000; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-right: 5px; }
+
+/* Experience */
+.exp-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.exp-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
+.exp-company { color: var(--accent2); margin: 5px 0; }
+.exp-date { font-size: 0.9rem; opacity: 0.7; }
+.card-desc { margin-top: 1rem; color: #cfe8ffcc; line-height: 1.6; }
+
+/* Projects */
+.project-img-container { height: 160px; background: #222; border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
+.project-img { width: 100%; height: 100%; object-fit: cover; }
+.project-title { margin: 0 0 0.5rem 0; font-size: 1.25rem; }
+
+/* Certificates */
+.cert-card { flex-direction: row; align-items: center; gap: 1rem; }
+.cert-icon { font-size: 2rem; color: var(--accent); }
+.cert-title { margin: 0; font-size: 1.1rem; }
+.cert-subtitle { font-size: 0.85rem; color: #cfe8ffcc; }
+
+/* Forms */
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 900px) {
+  .app-container { grid-template-columns: 1fr; padding: 1rem; }
+  .sticky-col { position: relative; top: 0; margin-bottom: 2rem; }
+  .nav-menu { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+  .cat-btn { white-space: nowrap; }
+}
